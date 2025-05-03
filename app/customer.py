@@ -4,6 +4,7 @@ import math
 from app.car import Car
 import app.shop
 
+
 @dataclass
 class Customer:
     name: str
@@ -33,4 +34,3 @@ class Customer:
         cost_fuel = self.calculate_trip_cost(shop.location, fuel_price) * 2
 
         return (cost_fuel + cost_product_cart) <= self.money
-
