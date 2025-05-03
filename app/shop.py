@@ -1,7 +1,9 @@
 from dataclasses import dataclass
 from datetime import datetime
+from typing import TYPE_CHECKING
 
-import app.customer
+if TYPE_CHECKING:
+    from app.customer import Customer
 
 
 @dataclass
@@ -22,7 +24,7 @@ class Shop:
                 print(f"Product {product} is not available in {self.name}")
         return round(cost, 2)
 
-    def generate_receipt(self, customer: app.customer.Customer) -> None:
+    def generate_receipt(self, customer: "Customer") -> None:
 
         current_time = datetime(
             2021, 1, 4, 12, 33, 41
