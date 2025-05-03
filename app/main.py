@@ -1,12 +1,12 @@
-from car import Car
-from customer import Customer
-from shop import Shop
+from app.car import Car
+from app.customer import Customer
+from app.shop import Shop
 
 import json
 
 
 def shop_trip() -> None:
-    with open("config.json", "r") as file:
+    with open("app/config.json", "r") as file:
         config = json.load(file)
 
         fuel_price = config["FUEL_PRICE"]
@@ -29,7 +29,7 @@ def shop_trip() -> None:
                     customer.calculate_trip_cost(shop.location, fuel_price) * 2 +
                     shop.calculate_product_cart_cost(customer.product_cart)
                 )
-                print(f"{customer.name}'s trip to {shop.name} costs {total_trip_cost:.2f}")
+                print(f"{customer.name}'s trip to the {shop.name} costs {total_trip_cost:.2f}")
                 if total_trip_cost <= customer.money:
                     trip_options.append((total_trip_cost, shop))
 
@@ -45,6 +45,6 @@ def shop_trip() -> None:
                 fuel_to_shop = customer.calculate_trip_cost(cheapest_shop.location, fuel_price)
                 total_purchase_cost = cheapest_shop.calculate_product_cart_cost(customer.product_cart)
                 customer.money -= (fuel_to_shop * 2 + total_purchase_cost)
-                print(f"{customer.name} now has {customer.money:.2f} dollars\n")
+                print(f"{customer.name} now has {customer.money} dollars\n")
             else:
                 print(f"{customer.name} doesn't have enough money to make a purchase in any shop\n")

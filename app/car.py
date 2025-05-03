@@ -10,6 +10,6 @@ class Car:
                   distance: float,
                   fuel_price: float
                   ) -> float:
-
+        rounded_distance = round(distance, 2)
         return ((distance * (self.fuel_consumption / 100))
                 * fuel_price)

@@ -2,7 +2,7 @@ from dataclasses import dataclass
 import math
 
 from app.car import Car
-from app.shop import Shop
+#from app.shop import Shop
 
 
 @dataclass
@@ -28,9 +28,11 @@ class Customer:
     def can_afford_trip(self,
                         shop_location: list[int],
                         fuel_price: float,
-                        shop: Shop) ->  bool:
+                        shop_name: str) -> bool:
+        # Імпортуємо тут клас Shop для уникнення циклічного імпорту
+        from app.shop import Shop
 
-        cost_product_cart = shop.calculate_product_cart_cost(self.product_cart)
+        cost_product_cart = shop_name.calculate_product_cart_cost(self.product_cart)
         cost_fuel = self.calculate_trip_cost(shop_location, fuel_price)
 
         if cost_fuel + cost_product_cart <= self.money:
