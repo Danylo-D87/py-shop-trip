@@ -1,7 +1,7 @@
-#from app.customer import Customer
-
 from dataclasses import dataclass
 from datetime import datetime
+
+import app.customer
 
 
 @dataclass
@@ -11,19 +11,18 @@ class Shop:
     products: dict
 
     def calculate_product_cart_cost(self,
-            product_cart: dict
-            ) -> int | float:
+                                    product_cart: dict
+                                    ) -> int | float:
+
         cost = 0
         for product, count_product in product_cart.items():
             if product in self.products:
                 cost += self.products[product] * count_product
             else:
                 print(f"Product {product} is not available in {self.name}")
-        return cost
+        return round(cost, 2)
 
-    def generate_receipt(self, customer: "Customer") -> str:
-        # Імпортуємо Customer для створення чеку
-        from app.customer import Customer
+    def generate_receipt(self, customer: app.customer.Customer) -> None:
 
         current_time = datetime(
             2021, 1, 4, 12, 33, 41
@@ -36,10 +35,12 @@ class Shop:
 
         for product, count_product in customer.product_cart.items():
             if product in self.products:
-                if (isinstance(self.products[product] * count_product, float) and
-                        (self.products[product] * count_product).is_integer()):
-                    print(f"{count_product} {product}s for {int(self.products[product] * count_product)} dollars")
-                print(f"{count_product} {product}s for {self.products[product] * count_product} dollars")
+                item_cost = self.products[product] * count_product
+                display_cost = int(item_cost) if \
+                    (isinstance(item_cost, float)
+                     and item_cost.is_integer()) else item_cost
+
+                print(f"{count_product} {product}s for {display_cost} dollars")
 
         print(f"Total cost is {total_cost} dollars")
-        print("See you again!")
+        print("See you again!\n")
